@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC
+    "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+    <bean id="userDao" class="com.sunland.dao.UserDao">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
+    </bean>
+    <bean id="userService" class="com.sunland.service.UserService">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <bean id="userAction" class="com.sunland.action.UserAction">
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+</beans>
