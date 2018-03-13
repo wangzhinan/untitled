@@ -8,5 +8,7 @@
     
     <package name="default" extends="struts-default" namespace="/">
         <action name="user_save" method="save" class="userAction"/>
+        <action name="test" method="execute" class="com.sunland.action.OutputAction"/>
+        <action name="fileUpload" method="fileUpload" class="com.sunland.action.OutputAction"/>
     </package>
 </struts>
