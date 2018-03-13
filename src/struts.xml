@@ -5,8 +5,10 @@
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
-    
-    <package name="default" extends="struts-default" namespace="/">
-        <action name="user_save" method="save" class="userAction"/>
+    <package name="default" extends="struts-default" namespace="/" >
+        <action name="user_save"  method="save" class="userAction" />
+        <action name="user_findAll" method="findAll" class="userAction">
+            <result name="success">index.jsp</result>
+        </action>
     </package>
 </struts>

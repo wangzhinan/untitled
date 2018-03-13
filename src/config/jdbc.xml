@@ -4,9 +4,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
     <!--spring的配置文件 与springMVC的配置文件对包的重复扫描装配会照成失效在主容器中（applicationContext.xml），将Controller的注解排除掉-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="jdbcUrl" value="${jdbc.url}"/>
@@ -22,11 +22,16 @@
                 <value>classpath:com/sunland/po/*.hbm.xml</value>
             </list>
         </property>
+        <property name="packagesToScan" >
+            <list>
+                <value>com.sunland.po.</value>
+            </list>
+        </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.format_sql">false</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
