@@ -8,6 +8,7 @@ import com.sunland.service.UserService;
 public class UserAction extends ActionSupport implements ModelDriven<User> {
     private User user = new User();
     private UserService userService;
+    private String name;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -25,4 +26,11 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
     }
 
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
