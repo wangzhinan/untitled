@@ -8,6 +8,9 @@
     
     <package name="default" extends="struts-default" namespace="/">
         <action name="user_save" method="save" class="userAction"/>
+        <action name="user_findAll" method="findAll" class="userAction">
+            <result name="success">index.jsp</result>
+        </action>
         <action name="test" method="execute" class="com.sunland.action.OutputAction"/>
         <action name="fileUpload" method="fileUpload" class="com.sunland.action.OutputAction"/>
     </package>

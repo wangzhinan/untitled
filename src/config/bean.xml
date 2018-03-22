@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC
-    "-//SPRING//DTD BEAN//EN"
-    "http://www.springframework.org/dtd/spring-beans.dtd">
 
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.sunland.action" >
+        <context:exclude-filter type="annotation" expression="org.springframework.context.annotation.Scope"/>
+    </context:component-scan>
 
     <bean id="userDao" class="com.sunland.dao.UserDao">
         <property name="hibernateTemplate" ref="hibernateTemplate"/>
     </bean>
     <bean id="userService" class="com.sunland.service.UserService">
-        <property name="userDao" ref="userDao"/>
+        <!--<property name="userDao" ref="userDao"/>-->
     </bean>
 
     <bean id="userAction" class="com.sunland.action.UserAction">
-        <property name="userService" ref="userService"/>
+        <!--<property name="userService" ref="userService"/>-->
     </bean>
+
+    <bean id="iuserService" class="com.sunland.service.IOutServiceImpl">
+
+    </bean>
+
+    <bean id="outService" class="com.sunland.service.IOutServiceImpl"/>
 
     <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
         <property name="sessionFactory" ref="sessionFactory"/>

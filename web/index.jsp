@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -11,6 +12,15 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  $ENDd$
+  <s:fielderror value="errors"/>
+  <table>
+    <s:iterator value="list" var="d">
+      <tr>
+        <td><s:property value="#d.password"/></td>
+      </tr>
+    </s:iterator>
+  </table>
+  <s:debug>debug</s:debug>
   </body>
 </html>
