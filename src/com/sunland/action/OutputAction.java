@@ -6,24 +6,25 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
 
-
+@RestController
 public class OutputAction extends ActionSupport implements ServletRequestAware, ServletResponseAware {
     private HttpServletRequest request;
     private HttpServletResponse response;
 
     @Override
     public String execute() throws Exception {
-        String re = request.getParameter("request");
-        System.out.println(re);
-        PrintWriter writer = response.getWriter();
-        writer.write(re);
-        writer.close();
+
+        String path = request.getSession().getServletContext().getRealPath("");
+        System.out.println(path);
         return super.execute();
     }
 
@@ -102,5 +103,17 @@ public class OutputAction extends ActionSupport implements ServletRequestAware, 
 //        writer.write("FileUpload");
 //        writer.close();
         return SUCCESS;
+
+    }
+
+    @RequestMapping("/test1")
+    public String test1(){
+        System.out.println("OutputAction.test2");
+        return "success";
+    }
+
+    @RequestMapping("/test2")
+    public void test12(){
+        System.out.println("OutputAction.test12");
     }
 }

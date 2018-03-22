@@ -11,6 +11,11 @@
     <context:component-scan base-package="com.sunland.action" >
         <context:exclude-filter type="annotation" expression="org.springframework.context.annotation.Scope"/>
     </context:component-scan>
+    <bean id="irViewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
 
     <bean id="userDao" class="com.sunland.dao.UserDao">
         <property name="hibernateTemplate" ref="hibernateTemplate"/>

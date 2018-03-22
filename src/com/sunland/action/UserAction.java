@@ -16,6 +16,11 @@ import java.util.List;
 @Scope("prototype")
 public class UserAction extends ActionSupport implements ModelDriven<User> {
     private User user = new User();
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Autowired
     private UserService userService;
 
@@ -50,7 +55,10 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
         pageBean.setTotalCount(100);
         pageBean.setTotalPage(10);
 
-        ActionContext.getContext().getValueStack().push(pageBean);
+        ActionContext.getContext().getValueStack().push(pageBean);//前端访问pagebean的list属性遍历
+
+//        ActionContext.getContext().getValueStack().set("users",users);//访问users遍历
+//        ActionContext.getContext().getSession().put("users",users);//#session.users
         this.addFieldError("errors","数据不能为空");
         System.out.println("findAll 执行了"+this.hashCode());
         return SUCCESS;
