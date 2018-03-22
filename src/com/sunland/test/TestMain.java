@@ -1,13 +1,7 @@
 package com.sunland.test;
 
-import com.google.gson.Gson;
-import com.sunland.action.UserAction;
-import com.sunland.pkg.BasePkg;
-import com.sunland.po.Book;
+import com.sunland.dao.UserDao;
 import com.sunland.po.User;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -16,12 +10,14 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.time.Clock;
-import java.time.LocalDate;
 import java.util.*;
+
 
 public class TestMain {
     private static final int a = 0;
@@ -68,10 +64,17 @@ public class TestMain {
             }
         };
         timer.schedule(timerTask, date, 10000);
-
-
-//
     }
+
+
+    private static void testSpring() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("config/applicationContext.xml");
+        UserDao userDao = (UserDao) context.getBean("userDao");
+        userDao.test();
+        userDao.save(new User(111L, "系统管理员", "123456"));
+
+    }
+
 
     // 增加或减少天数
     public static Date addDay(Date date, int num) {
@@ -88,34 +91,67 @@ public class TestMain {
         System.out.println(calendar.get(Calendar.YEAR));
         System.out.println(calendar.get(Calendar.HOUR_OF_DAY));
         System.out.println(calendar.get(Calendar.HOUR));
+    }
 
+
+    public void testFile1() {
+        File file = new File("");
+        try (
+                FileInputStream fileInputStream = new FileInputStream(file);
+                FileOutputStream fileOutputStream = new FileOutputStream(file)
+        ) {
+            int length = fileInputStream.read(new byte[1024]);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testFile() throws Exception {
+        File file = new File("D:/file/20171228104127.jpg");
+        File file1 = new File("D:/file/test.txt");
+        FileInputStream fileInputStream = new FileInputStream(file);
+        FileOutputStream outputStream = new FileOutputStream(file1);
+        StringWriter writer = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(file1);
+        for (int i = 0; i < 10; i++) {
+            printWriter.print(i);
+        }
+        printWriter.close();
 
     }
 
-    private static void testSpring() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("config/applicationContext.xml");
-//        UserDao userDao = (UserDao) context.getBean("userDao");
-        UserAction userAction = (UserAction) context.getBean("userAction");
-//        UserAction.register(new User(1000,"myname","pass"));
-        userAction.findAll();
-        userAction = (UserAction) context.getBean("userAction");
-        userAction.findAll();
-//        userDao.test();
-        Book book = new Book();
-        book.setId(170);
-        book.setName("shuming");
-//        userDao.save(new User(1008,"系统管理员1","123456"));
-//        userDao.save(book);
-//        userDao.save(new User(101L,"系统管理员2","123456"));
-//        userDao.save(new User(102L,"系统管理员3","123456"));
-//        System.out.println("总数为："+userDao.findCount());
+    @Test
+    public void write() {
+        File f = new File("D:/file/data.txt");
+        try (
+                FileOutputStream fos = new FileOutputStream(f);
+                DataOutputStream dos = new DataOutputStream(fos);
+        ) {
+            dos.writeBoolean(true);
+            dos.writeInt(300);
+            dos.writeUTF("123 this is gareen");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-//        List<User> users = userDao.findByPage(0,10);
-//        for (int i = 0; i < users.size(); i++) {
-//            System.out.println(users.get(i).getId());
-//        }
+    }
 
+    @Test
+    public void read() {
+        File file = new File("D:/file/data.txt");
+        try (
+                FileInputStream fileInputStream = new FileInputStream(file);
+                DataInputStream dataInputStream = new DataInputStream(fileInputStream)
+        ) {
+            System.out.println(dataInputStream.readBoolean());
+            System.out.println(dataInputStream.readInt());
+            System.out.println(dataInputStream.readUTF());
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void testHibernate() {
@@ -141,6 +177,7 @@ public class TestMain {
 
         System.out.println("successfully saved");
     }
+
 
     public static boolean test1(int val) {
         System.out.println("test1(" + val + ")");
@@ -184,7 +221,7 @@ public class TestMain {
     }
 
     @Test
-    public void test5(){
+    public void test5() {
         int i = 1;
 
         while (i <= 10) {
@@ -207,5 +244,63 @@ public class TestMain {
         }
 
     }
+
+
+    @Test
+    public void testThread() {
+        System.out.println("初始中断状态：" + Thread.currentThread().isInterrupted());
+        Thread.currentThread().interrupt();
+        System.out.println("执行完interrupt方法后，中断状态：" + Thread.currentThread().isInterrupted());
+        System.out.println("首次调用interrupted方法返回结果：" + Thread.interrupted());
+        System.out.println("此时中断状态：" + Thread.currentThread().isInterrupted());
+        System.out.println("第二次调用interrupted方法返回结果：" + Thread.interrupted());
+        System.out.println("此时中断状态：" + Thread.currentThread().isInterrupted());
+    }
+
+    @Test
+    public void testFiles() {
+        try {
+            Path path1 = Paths.get("C:/Users/Administrator/Desktop/台州/a.txt");
+            Path path2 = Paths.get("C:/Users/Administrator/Desktop/台州/b.txt");
+            Files.copy(path1, path2);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testRandomChar() {
+        for (int i = 0; i < 10; i++) {
+            double a = Math.random() * 26 + 'a';
+            char b = (char) a;
+            int c = (int) a;
+            System.out.println(String.format("%c年 %03d% f%%", b, c, a));
+
+        }
+    }
+
+    @Test
+    public void testEnum() {
+        System.out.println(DataType.TEST.name());
+    }
+
+    @Test
+    public void testString() {
+        String s = "32.,;']p[}{";
+        System.out.println(s.replaceAll("[.,;`'{}/\\[\\]]", ""));
+
+    }
+
+    @Test
+    public void testOptional() {
+        User user = new User("admin", "123456");
+        Optional<String> optional = Optional.ofNullable(user.getName());
+        String name = optional.orElse("this is null");
+        System.out.println(optional.get());
+        Collections.emptyList();
+
+    }
+
 }
 

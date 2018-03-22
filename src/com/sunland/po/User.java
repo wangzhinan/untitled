@@ -4,8 +4,18 @@ public class User {
     private long id;
     private String name;
     private String password;
+    private Data data;
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
 
     public User() {
+        System.out.println("no param");
     }
 
     public User(String name, String password) {
