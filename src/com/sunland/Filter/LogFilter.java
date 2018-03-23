@@ -12,6 +12,10 @@ import java.util.Map;
 @WebFilter(filterName="logFilter",urlPatterns="/*")
 public class LogFilter implements Filter {
 
+    static {
+        System.out.println("LogFilter.static initializer");
+    }
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         System.out.println("filter init");

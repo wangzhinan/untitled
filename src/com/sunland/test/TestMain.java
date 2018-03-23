@@ -17,10 +17,13 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class TestMain {
-    private static final int a = 0;
+    private static int a = 0;
 
     public static void main(String[] args) {
 
@@ -36,34 +39,8 @@ public class TestMain {
 //        user.setPassword("123456");
 //        basePkg.setParameter(new Gson().toJson(user));
 //        System.out.println(new Gson().toJson(basePkg));
-        Calendar calendar = Calendar.getInstance();
+        testTimerTask();
 
-/*** 定制每日2:00执行方法 ***/
-
-//        calendar.set(Calendar.HOUR_OF_DAY, 20);
-//        calendar.set(Calendar.MINUTE, 32);
-        calendar.set(Calendar.SECOND, 0);
-
-        Date date = calendar.getTime(); //第一次执行定时任务的时间
-
-//如果第一次执行定时任务的时间 小于 当前的时间
-//此时要在 第一次执行定时任务的时间 加一天，以便此任务在下个时间点执行。如果不加一天，任务会立即执行。
-        if (date.before(new Date())) {
-//            date = addDay(date, 1);
-            System.out.println("before");
-        } else {
-            System.out.println("after");
-        }
-
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                DateFormat format = new SimpleDateFormat("yyyy年MM月dd日HH时mm分ss秒S毫秒");
-                System.out.println(format.format(new Date()));
-            }
-        };
-        timer.schedule(timerTask, date, 10000);
     }
 
 
@@ -260,9 +237,16 @@ public class TestMain {
     @Test
     public void testFiles() {
         try {
-            Path path1 = Paths.get("C:/Users/Administrator/Desktop/台州/a.txt");
+            Path path1 = Paths.get("C:/Users/Administrator/Desktop/台州/LoginActivity.java");
             Path path2 = Paths.get("C:/Users/Administrator/Desktop/台州/b.txt");
-            Files.copy(path1, path2);
+//            Files.copy(path1, path2);
+            File file = new File("C:/Users/Administrator/Desktop/台州/b.txt");
+            FileInputStream fileInputStream = new FileInputStream(file);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String result = null;
+            while ((result = reader.readLine()) != null) {
+                System.out.println(result);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -300,6 +284,76 @@ public class TestMain {
         System.out.println(optional.get());
         Collections.emptyList();
 
+    }
+
+    /**
+     * http://tool.oschina.net/uploads/apidocs/jquery/regexp.html
+     */
+    @Test
+    public void testRegex() {
+        String input = "111111";
+        String regex = "(\\w)\\1{6}";
+        System.out.println(input.matches(regex));
+        regex = "A?B?C?";
+        input = "AAABBC";
+        System.out.println(input.matches(regex));
+        input = "AC";
+        System.out.println(input.matches(regex));
+        regex = "(1234|1235).*";
+        System.out.println("123456".matches(regex));
+        System.out.println("123543".matches(regex));
+        System.out.println("1234".matches(regex));
+        System.out.println("12".matches(regex));
+
+    }
+
+    @Test
+    public void testSystemProperty() {
+        String lineSeparator = java.security.AccessController.doPrivileged(
+                new sun.security.action.GetPropertyAction("line.separator"));
+        System.out.print("是" + System.getProperty("line.separator") + "不是");
+    }
+
+
+    public static void testTimerTask(){
+        DateFormat format = new SimpleDateFormat("yyyy年MM月dd日HH时mm分ss秒S毫秒");
+
+        Calendar calendar = Calendar.getInstance();
+
+/*** 定制每日2:00执行方法 ***/
+
+//        calendar.set(Calendar.HOUR_OF_DAY, 20);
+//        calendar.set(Calendar.MINUTE, 32);
+        calendar.set(Calendar.SECOND, 0);
+
+        Date date = calendar.getTime(); //第一次执行定时任务的时间
+
+//如果第一次执行定时任务的时间 小于 当前的时间
+//此时要在 第一次执行定时任务的时间 加一天，以便此任务在下个时间点执行。如果不加一天，任务会立即执行。
+        if (date.before(new Date())) {
+//            date = addDay(date, 1);
+            System.out.println("before");
+        } else {
+            System.out.println("after");
+        }
+
+        System.out.println(Thread.currentThread().getName()+format.format(date));
+        ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("tet");
+                System.out.println(format.format(new Date())+Thread.currentThread().getName());
+                a++;
+//                if (a > 5){
+//                    scheduledExecutorService.shutdown();
+//                    System.out.println("shut down");
+//                }
+            }
+        };
+//        timer.schedule(timerTask, date);
+        scheduledExecutorService.scheduleAtFixedRate(timerTask,0,1, TimeUnit.SECONDS);
     }
 
 }

@@ -1,4 +1,4 @@
-package sort;
+package com.sunland.test.sort;
 
 public class StackX {
     private int maxSize;
