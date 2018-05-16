@@ -8,6 +8,7 @@ public abstract class BasePrinter<T> implements IPrinter {
         this.baseTemplate = baseTemplate;
         this.listener = listener;
     }
+    //&#@！anr<>?{}}{{p][]and listener &*%4%'%an阿纳通"
 
     public void start() {
         new Thread(() -> {
@@ -27,6 +28,5 @@ public abstract class BasePrinter<T> implements IPrinter {
             }
         }).start();
     }
-
    public abstract String getErrMessage();
 }

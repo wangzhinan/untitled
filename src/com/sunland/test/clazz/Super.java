@@ -1,7 +1,12 @@
 package com.sunland.test.clazz;
 
-public class Super {
-    public void testOverride(){
-        System.out.println("from Super");
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+public abstract class Super {
+    public abstract void testOverride() throws IOException;
+
+    public void testThrowable() throws FileNotFoundException{
+
     }
 }

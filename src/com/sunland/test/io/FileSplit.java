@@ -20,7 +20,7 @@ public class FileSplit {
         String infoFilePath = this.getClass().getResource("").getPath();
         System.out.println(infoFilePath);
 
-        File fileInfo = new File( "E:/result/info.properties");
+        File fileInfo = new File("E:/result/info.properties");
         BufferedOutputStream outInfo = new BufferedOutputStream(new FileOutputStream(fileInfo));
         outInfo.write(("fileName=" + oldFile.getName() + "\n").getBytes());
         outInfo.write(("fileNumber=" + Number + "\n").getBytes());
@@ -58,7 +58,7 @@ public class FileSplit {
 //        Properties properties = Properties.loadProperties("info.properties");
         Properties properties = new Properties();
         InputStream inputStream = new FileInputStream("E:/result/info.properties");
-        properties.load(new InputStreamReader(inputStream,"UTF-8"));
+        properties.load(new InputStreamReader(inputStream, "UTF-8"));
 
         int number = Integer.parseInt(properties.getProperty("fileNumber"));
         File oldFile = new File("E:/result/answer/" + properties.getProperty("fileName"));
@@ -89,16 +89,16 @@ public class FileSplit {
     public static void main(String[] args) {
         try {
             //分块
-            new FileSplit().splitByNumber("E:\\tests\\sw.jpg",10);
+            new FileSplit().splitByNumber("D:\\test\\ThinkinJava.pdf", 21);
 //            合并
-            new FileSplit().mergeByName();
+//            new FileSplit().mergeByName();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testFileSplit(){
+    public void testFileSplit() {
 //        try {
 //            splitByNumber("E:/result/宁波协管通需求设计文档.doc",5);
 //        } catch (Exception e) {
@@ -112,14 +112,56 @@ public class FileSplit {
     }
 
     @Test
-    public void test1(){
+    public void test1() {
         try {
-            RandomAccessFile randomAccessFile = new RandomAccessFile("E:","rw");
+            RandomAccessFile randomAccessFile = new RandomAccessFile("E:", "rw");
             randomAccessFile.seek(44);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void splitFileDemo(File src, int m) {
+        if (src.isFile()) {
+            //获取文件的总长度
+            long l = src.length();
+            //获取文件名
+            String fileName = src.getName().substring(0, src.getName().indexOf("."));
+            //获取文件后缀
+            String endName = src.getName().substring(src.getName().lastIndexOf("."));
+            System.out.println(endName);
+            InputStream in = null;
+            try {
+                in = new FileInputStream(src);
+                for (int i = 1; i <= m; i++) {
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(src.getParent()).append("\\").append(fileName)
+                            .append("_data").append(i).append(endName);
+                    System.out.println(sb.toString());
+                    File file2 = new File(sb.toString());
+                    //创建写文件的输出流
+                    OutputStream out = new FileOutputStream(file2);
+                    int len = -1;
+                    byte[] bytes = new byte[10 * 1024 * 1024];
+                    while ((len = in.read(bytes)) != -1) {
+                        out.write(bytes, 0, len);
+                        if (file2.length() > (l / m)) {
+                            break;
+                        }
+                    }
+                    out.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.sunland.Filter;
 
+import com.sunland.po.User;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +13,8 @@ import java.util.Map;
 
 @WebFilter(filterName="logFilter",urlPatterns="/*")
 public class LogFilter implements Filter {
-
+    private User user1 = new User("user1","password1");
+    private static User user2 = new User("user2","password2");
     static {
         System.out.println("LogFilter.static initializer");
     }

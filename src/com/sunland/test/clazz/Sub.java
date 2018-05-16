@@ -2,20 +2,31 @@ package com.sunland.test.clazz;
 
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
+
 public class Sub extends Super{
     public static void main(String[] args) {
 
     }
 
+    private class MySub{
+        public MySub(int a){
+
+        }
+    }
+
     @Override
-    public void testOverride() {
-        super.testOverride();
+    public void testOverride() throws FileNotFoundException {
         System.out.println("from Sub");
     }
 
     @Test
-    public void test(){
+    public void test() throws FileNotFoundException{
         testOverride();
     }
 
+    @Override
+    public void testThrowable() throws FileNotFoundException {
+        super.testThrowable();
+    }
 }

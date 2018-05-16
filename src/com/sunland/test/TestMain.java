@@ -11,37 +11,89 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class TestMain {
     private static int a = 0;
+    static boolean b = false;
+    private static Person person = new Person("my");
 
-    public static void main(String[] args) {
-
-//        Logger logger = LogManager.getLogger();
-//        logger.error("报错信息", new IllegalArgumentException("非法参数"));
-//        test1(2);
-//        System.out.println(System.getProperty("user.country"));
-//        BasePkg basePkg = new BasePkg();
-//        basePkg.setMethod("login");
-//        User user = new User();
-//        user.setId(1);
-//        user.setName("admin");
-//        user.setPassword("123456");
-//        basePkg.setParameter(new Gson().toJson(user));
-//        System.out.println(new Gson().toJson(basePkg));
-        testTimerTask();
-
+    /**
+     * 测试
+     *
+     * @param args
+     */
+    public static void main(String[] args) throws IOException {
+        Person person = new Person("admin");
+        System.out.println(person);
     }
+
+
+    @Test
+    public void testClass(){
+        try {
+            Class<?> clazz = Class.forName("com.sunland.po.User");
+            User user = (User) clazz.newInstance();
+            user.setName("admin");
+            System.out.println(user.getName());
+        } catch (ClassNotFoundException
+                | IllegalAccessException
+                | InstantiationException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void testBitSet(){
+        BitSet bits1 = new BitSet(16);
+        BitSet bits2 = new BitSet(16);
+
+        // set some bits
+        for(int i=0; i<17; i++) {
+            if((i%2) == 0) bits1.set(i);
+            if((i%5) != 0) bits2.set(i);
+        }
+        for (int i = 0; i < bits1.length(); i++) {
+            System.out.println("bits1 "+i+" = " + bits1.get(i));
+        }
+        for (int i = 0; i < bits2.length(); i++) {
+            System.out.println("bits2 "+i+" = " + bits2.get(i));
+        }
+        System.out.println("Initial pattern in bits1: ");
+        System.out.println(bits1);
+        System.out.println(" Initial pattern in bits2: ");
+        System.out.println(bits2);
+
+        // AND bits
+        bits2.and(bits1);
+        System.out.println(" bits2 AND bits1: ");
+        System.out.println(bits2);
+
+        // OR bits
+        bits2.or(bits1);
+        System.out.println(" bits2 OR bits1: ");
+        System.out.println(bits2);
+
+        // XOR bits
+        bits2.xor(bits1);
+        System.out.println("bits2 XOR bits1: ");
+        System.out.println(bits2);
+
+        Vector<String> vector = new Vector<>();
+        vector.addElement("fd");
+        Enumeration elements = vector.elements();
+        elements.hasMoreElements();
+    }
+
 
 
     private static void testSpring() {
@@ -315,7 +367,7 @@ public class TestMain {
     }
 
 
-    public static void testTimerTask(){
+    public static void testTimerTask() {
         DateFormat format = new SimpleDateFormat("yyyy年MM月dd日HH时mm分ss秒S毫秒");
 
         Calendar calendar = Calendar.getInstance();
@@ -337,14 +389,14 @@ public class TestMain {
             System.out.println("after");
         }
 
-        System.out.println(Thread.currentThread().getName()+format.format(date));
+        System.out.println(Thread.currentThread().getName() + format.format(date));
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 System.out.println("tet");
-                System.out.println(format.format(new Date())+Thread.currentThread().getName());
+                System.out.println(format.format(new Date()) + Thread.currentThread().getName());
                 a++;
 //                if (a > 5){
 //                    scheduledExecutorService.shutdown();
@@ -353,8 +405,89 @@ public class TestMain {
             }
         };
 //        timer.schedule(timerTask, date);
-        scheduledExecutorService.scheduleAtFixedRate(timerTask,0,1, TimeUnit.SECONDS);
+        scheduledExecutorService.scheduleAtFixedRate(timerTask, 0, 1, TimeUnit.SECONDS);
     }
+
+    @Test
+    public void testList() {
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("2");
+        for (String s : list) {
+            if ("2".equals(s))
+                list.remove(s);
+        }
+
+    }
+
+    @Test
+    public void testObject() {
+        User user = new User("admins", "654321");
+        testObject(user);
+        System.out.println("user = " + user.getName());
+    }
+
+    public void testObject(User user) {
+        user = new User("admin", "123456");
+//        user.setName("admin");
+        System.out.println(user.getName());
+    }
+
+    @Test
+    public void testCalendar(){
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(dateFormat.format(calendar.getTime()));
+
+        //当天
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        System.out.println("起始时间："+dateFormat.format(calendar.getTime()));
+        calendar.set(Calendar.HOUR_OF_DAY,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        System.out.println("结束时间："+dateFormat.format(calendar.getTime()));
+
+        //昨天
+        calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH,-1);
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        System.out.println("起始时间："+dateFormat.format(calendar.getTime()));
+        calendar.set(Calendar.HOUR_OF_DAY,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        System.out.println("结束时间："+dateFormat.format(calendar.getTime()));
+
+        //本周
+        calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH,-calendar.get(Calendar.DAY_OF_WEEK)+2);
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        System.out.println("开始时间："+dateFormat.format(calendar.getTime()));
+        calendar.add(Calendar.DAY_OF_MONTH,6);
+        calendar.set(Calendar.HOUR_OF_DAY,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        System.out.println("结束时间："+dateFormat.format(calendar.getTime()));
+
+        //本月
+        calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH,1);
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        System.out.println("开始时间："+dateFormat.format(calendar.getTime()));
+        calendar.add(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DAY_OF_MONTH)-1);
+        calendar.set(Calendar.HOUR_OF_DAY,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        System.out.println("结束时间："+dateFormat.format(calendar.getTime()));
+    }
+
 
 }
 

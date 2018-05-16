@@ -3,6 +3,7 @@ package com.sunland.test.sort;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.BitSet;
 
 public class ArraySort {
 
@@ -56,17 +57,30 @@ public class ArraySort {
 //            }
 //            array[j] = temp;
 //        }
-        for (int i = 1; i < array.length; i++) {
+//        for (int i = 1; i < array.length; i++) {
+//            int temp = array[i];
+//            int j;
+//            for (j = i; j > 0; j--) {
+//                if (array[j - 1] > temp) {
+//                    array[j] = array[j - 1];
+//                }else {
+//                    break;
+//                }
+//            }
+//            array[j] = temp;
+//        }
+
+        for (int i = 0; i < array.length; i++) {
             int temp = array[i];
             int j;
-            for (j = i; j > 0; j--) {
-                if (array[j - 1] > temp) {
-                    array[j] = array[j - 1];
+            for (j = i - 1;j >= 0;j--){
+                if (array[j] > temp){
+                    array[j+1] = array[j];
                 }else {
                     break;
                 }
             }
-            array[j] = temp;
+            array[j+1] = temp;
         }
     }
 

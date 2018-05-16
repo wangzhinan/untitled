@@ -21,6 +21,17 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
+        System.out.println(this.toString());
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", data=" + data +
+                '}';
     }
 
     public User(long id, String name, String password) {
