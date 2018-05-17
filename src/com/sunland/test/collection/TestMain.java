@@ -5,13 +5,10 @@ import org.junit.Test;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class TestMain {
     private static int  n;
     public static void main(String[] args) {
-        timerTask();
     }
 
     @Test
@@ -75,37 +72,6 @@ public class TestMain {
 
     }
 
-    public static void timerTask() {
-        Timer timer = new Timer();
-        ScheduledExecutorService service = Executors.newScheduledThreadPool(3);
-        n = 6;
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    n--;
-                    System.out.println("n = "+n +" task1  "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-                    int c = 34/n;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-        TimerTask timerTask1 = new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("n = "+n +" task2  "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-
-            }
-        };
-        timer.schedule(timerTask,0,2000);
-        timer.schedule(timerTask1,0,2000);
-
-//        service.scheduleAtFixedRate(timerTask,0,2, TimeUnit.SECONDS);
-//        service.scheduleAtFixedRate(timerTask1,0,2, TimeUnit.SECONDS);
-
-    }
 
     @Test
     public void testMap() {
