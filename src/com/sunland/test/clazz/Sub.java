@@ -22,11 +22,16 @@ public class Sub extends Super{
 
     @Test
     public void test() throws FileNotFoundException{
-        testOverride();
+        testThrowable();
     }
 
     @Override
     public void testThrowable() throws FileNotFoundException {
         super.testThrowable();
+    }
+
+    @Override
+    public void callBack() {
+        
     }
 }

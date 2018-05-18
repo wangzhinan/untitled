@@ -10,7 +10,8 @@ public class UserTemplate extends BaseTemplate<User> {
 
     @Override
     public int doPrint(Object printer, User data, Map<String, Object> extras, int totalPage) throws Exception {
-
+        System.out.println("第" + getCurrentPage() + "次" + data.getName());
+        int c = 5 / (getTotalPage() - getCurrentPage());
         return 0;
     }
 }

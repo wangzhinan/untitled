@@ -6,8 +6,20 @@ public class MyPrinter extends BasePrinter {
     }
 
     @Override
-    public String getErrMessage() {
-        return "error";
+    public String getErrMessage(int code) {
+        String errorMessage = "";
+        switch (code) {
+            case -1:
+                errorMessage = "error1";
+                break;
+            case -2:
+                errorMessage = "error2";
+                break;
+            default:
+                break;
+
+        }
+        return errorMessage;
     }
 
     @Override

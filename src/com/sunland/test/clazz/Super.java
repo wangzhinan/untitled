@@ -7,6 +7,11 @@ public abstract class Super {
     public abstract void testOverride() throws IOException;
 
     public void testThrowable() throws FileNotFoundException{
+        System.out.println("testThrowale super");
+        callBack();
+    }
 
+    public void callBack(){
+        System.out.println("callBack super");
     }
 }

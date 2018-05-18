@@ -21,16 +21,16 @@ public class TestMain {
 
 
     @Test
-    public void testA(){
-        Assert.assertEquals(test(3,4),0);
-        Assert.assertEquals(test(3,2),1);
-        Assert.assertEquals(test(3,1),1);
+    public void testA() {
+        Assert.assertEquals(test(3, 4), 0);
+        Assert.assertEquals(test(3, 2), 1);
+        Assert.assertEquals(test(3, 1), 1);
     }
 
 
-   public int test(int a,int b){
-        return a/b;
-   }
+    public int test(int a, int b) {
+        return a / b;
+    }
 
     public static void testInterruptSynchronized() throws Exception {
         Object lock = new Object();

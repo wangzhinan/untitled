@@ -7,7 +7,7 @@ public class TestProducerCutomer {
     public static void main(String[] args) throws Exception {
         Storage storage = new Storage();
         ExecutorService service = Executors.newCachedThreadPool();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 10; i++) {
             Producer producer = new Producer(storage,"producer"+i);
             service.execute(producer);
         }

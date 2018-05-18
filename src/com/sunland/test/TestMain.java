@@ -38,7 +38,7 @@ public class TestMain {
 
 
     @Test
-    public void testClass(){
+    public void testClass() {
         try {
             Class<?> clazz = Class.forName("com.sunland.po.User");
             User user = (User) clazz.newInstance();
@@ -53,20 +53,20 @@ public class TestMain {
 
 
     @Test
-    public void testBitSet(){
+    public void testBitSet() {
         BitSet bits1 = new BitSet(16);
         BitSet bits2 = new BitSet(16);
 
         // set some bits
-        for(int i=0; i<17; i++) {
-            if((i%2) == 0) bits1.set(i);
-            if((i%5) != 0) bits2.set(i);
+        for (int i = 0; i < 17; i++) {
+            if ((i % 2) == 0) bits1.set(i);
+            if ((i % 5) != 0) bits2.set(i);
         }
         for (int i = 0; i < bits1.length(); i++) {
-            System.out.println("bits1 "+i+" = " + bits1.get(i));
+            System.out.println("bits1 " + i + " = " + bits1.get(i));
         }
         for (int i = 0; i < bits2.length(); i++) {
-            System.out.println("bits2 "+i+" = " + bits2.get(i));
+            System.out.println("bits2 " + i + " = " + bits2.get(i));
         }
         System.out.println("Initial pattern in bits1: ");
         System.out.println(bits1);
@@ -93,7 +93,6 @@ public class TestMain {
         Enumeration elements = vector.elements();
         elements.hasMoreElements();
     }
-
 
 
     private static void testSpring() {
@@ -276,17 +275,6 @@ public class TestMain {
 
 
     @Test
-    public void testThread() {
-        System.out.println("初始中断状态：" + Thread.currentThread().isInterrupted());
-        Thread.currentThread().interrupt();
-        System.out.println("执行完interrupt方法后，中断状态：" + Thread.currentThread().isInterrupted());
-        System.out.println("首次调用interrupted方法返回结果：" + Thread.interrupted());
-        System.out.println("此时中断状态：" + Thread.currentThread().isInterrupted());
-        System.out.println("第二次调用interrupted方法返回结果：" + Thread.interrupted());
-        System.out.println("此时中断状态：" + Thread.currentThread().isInterrupted());
-    }
-
-    @Test
     public void testFiles() {
         try {
             Path path1 = Paths.get("C:/Users/Administrator/Desktop/台州/LoginActivity.java");
@@ -434,58 +422,76 @@ public class TestMain {
     }
 
     @Test
-    public void testCalendar(){
+    public void testCalendar() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(dateFormat.format(calendar.getTime()));
 
         //当天
-        calendar.set(Calendar.HOUR_OF_DAY,0);
-        calendar.set(Calendar.MINUTE,0);
-        calendar.set(Calendar.SECOND,0);
-        System.out.println("起始时间："+dateFormat.format(calendar.getTime()));
-        calendar.set(Calendar.HOUR_OF_DAY,23);
-        calendar.set(Calendar.MINUTE,59);
-        calendar.set(Calendar.SECOND,59);
-        System.out.println("结束时间："+dateFormat.format(calendar.getTime()));
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        System.out.println("起始时间：" + dateFormat.format(calendar.getTime()));
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        System.out.println("结束时间：" + dateFormat.format(calendar.getTime()));
 
         //昨天
         calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH,-1);
-        calendar.set(Calendar.HOUR_OF_DAY,0);
-        calendar.set(Calendar.MINUTE,0);
-        calendar.set(Calendar.SECOND,0);
-        System.out.println("起始时间："+dateFormat.format(calendar.getTime()));
-        calendar.set(Calendar.HOUR_OF_DAY,23);
-        calendar.set(Calendar.MINUTE,59);
-        calendar.set(Calendar.SECOND,59);
-        System.out.println("结束时间："+dateFormat.format(calendar.getTime()));
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        System.out.println("起始时间：" + dateFormat.format(calendar.getTime()));
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        System.out.println("结束时间：" + dateFormat.format(calendar.getTime()));
 
         //本周
         calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH,-calendar.get(Calendar.DAY_OF_WEEK)+2);
-        calendar.set(Calendar.HOUR_OF_DAY,0);
-        calendar.set(Calendar.MINUTE,0);
-        calendar.set(Calendar.SECOND,0);
-        System.out.println("开始时间："+dateFormat.format(calendar.getTime()));
-        calendar.add(Calendar.DAY_OF_MONTH,6);
-        calendar.set(Calendar.HOUR_OF_DAY,23);
-        calendar.set(Calendar.MINUTE,59);
-        calendar.set(Calendar.SECOND,59);
-        System.out.println("结束时间："+dateFormat.format(calendar.getTime()));
+        calendar.add(Calendar.DAY_OF_MONTH, -calendar.get(Calendar.DAY_OF_WEEK) + 2);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        System.out.println("开始时间：" + dateFormat.format(calendar.getTime()));
+        calendar.add(Calendar.DAY_OF_MONTH, 6);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        System.out.println("结束时间：" + dateFormat.format(calendar.getTime()));
 
         //本月
         calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH,1);
-        calendar.set(Calendar.HOUR_OF_DAY,0);
-        calendar.set(Calendar.MINUTE,0);
-        calendar.set(Calendar.SECOND,0);
-        System.out.println("开始时间："+dateFormat.format(calendar.getTime()));
-        calendar.add(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DAY_OF_MONTH)-1);
-        calendar.set(Calendar.HOUR_OF_DAY,23);
-        calendar.set(Calendar.MINUTE,59);
-        calendar.set(Calendar.SECOND,59);
-        System.out.println("结束时间："+dateFormat.format(calendar.getTime()));
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        System.out.println("开始时间：" + dateFormat.format(calendar.getTime()));
+        calendar.add(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        System.out.println("结束时间：" + dateFormat.format(calendar.getTime()));
+    }
+
+    @Test
+    public void testSwitch(){
+        testSwitch(1);
+    }
+
+    public void testSwitch(int i) {
+        switch (i) {
+            case 0:
+                System.out.println("a");
+            case 1:
+                System.out.println("b");
+            case 2:
+                System.out.println("c");
+            default:
+                break;
+        }
     }
 
 

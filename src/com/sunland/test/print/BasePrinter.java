@@ -16,17 +16,25 @@ public abstract class BasePrinter<T> implements IPrinter {
                 int code = baseTemplate.doPrint(getPrinter(), baseTemplate.getData(), baseTemplate.getExtras(), baseTemplate.getTotalPage());
                 if (listener != null) {
                     if (code == 0)
-                        listener.onSuccess(baseTemplate.getCurrentPage());
+                        listener.onSuccess(baseTemplate.getCurrentPage(),baseTemplate.getTotalPage(),this);
                     else
-                        listener.onError(baseTemplate.getCurrentPage(), code, getErrMessage());
+                        listener.onError(baseTemplate.getCurrentPage(),code, getErrMessage(code),this);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
                 if (listener != null) {
-                    listener.onError(baseTemplate.getCurrentPage(), -999, getErrMessage());
+                    listener.onError(baseTemplate.getCurrentPage(),-999, e.getMessage(),this);
                 }
             }
         }).start();
     }
-   public abstract String getErrMessage();
+
+    public BaseTemplate<T> getBaseTemplate() {
+        return baseTemplate;
+    }
+
+    public void printNextPage(){
+        baseTemplate.setNextPage();
+        start();
+    }
+   public abstract String getErrMessage(int code);
 }
