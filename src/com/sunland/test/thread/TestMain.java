@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -16,6 +17,14 @@ public class TestMain {
 
 
     public static void main(String[] args) throws Exception {
+        Listener listener = new Listener() {
+            @Override
+            public void onResponse(String s) {
+                System.out.println(s+ Instant.now());
+            }
+        };
+        CallBackThread thread = new CallBackThread(listener);
+        thread.start();
 
     }
 
