@@ -1,6 +1,6 @@
 package com.sunland.test.print;
 
-public interface IPrinter {
-    Object getPrinter();
+public interface IPrinter<E> {
+    E getPrinter();
     boolean openDevice(Object params);
 }

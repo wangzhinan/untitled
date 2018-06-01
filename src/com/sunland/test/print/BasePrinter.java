@@ -1,10 +1,10 @@
 package com.sunland.test.print;
 
-public abstract class BasePrinter<T> implements IPrinter {
-    private BaseTemplate<T> baseTemplate;
+public abstract class BasePrinter<T,E> implements IPrinter<E> {
+    private BaseTemplate<T,E> baseTemplate;
     private PrintStatusListener listener;
 
-    public BasePrinter(BaseTemplate<T> baseTemplate, PrintStatusListener listener) {
+    public BasePrinter(BaseTemplate<T,E> baseTemplate, PrintStatusListener listener) {
         this.baseTemplate = baseTemplate;
         this.listener = listener;
     }
@@ -28,7 +28,7 @@ public abstract class BasePrinter<T> implements IPrinter {
         }).start();
     }
 
-    public BaseTemplate<T> getBaseTemplate() {
+    public BaseTemplate<T,E> getBaseTemplate() {
         return baseTemplate;
     }
 

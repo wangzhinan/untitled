@@ -477,7 +477,7 @@ public class TestMain {
     }
 
     @Test
-    public void testSwitch(){
+    public void testSwitch() {
         testSwitch(1);
     }
 
@@ -492,6 +492,103 @@ public class TestMain {
             default:
                 break;
         }
+    }
+
+    @Test
+    public void test1() {
+        try {
+            int c = 5 / 0;
+        } catch (Exception e) {
+            System.out.println("exception");
+        } finally {
+            System.out.println("finally");
+        }
+        System.out.println("end");
+    }
+
+    public String mask(String source, int start, int end, char mask) {
+        if (source == null || source.length() == 0 ||
+                start < 0 || end - start < 1 ||
+                end > source.length())
+            return "";
+        int maskLength = end - start;
+        StringBuilder sb = new StringBuilder();
+        sb.append(source.substring(0, start));
+        for (int i = 0; i < maskLength; i++) {
+            sb.append(mask);
+        }
+        sb.append(source.substring(end));
+        return sb.toString();
+    }
+
+    @Test
+    public void test() {
+        String[] strings = new String[5];
+        for (int i = 0; i < 5; i++) {
+            strings[i] = "data" + i;
+        }
+        System.out.println(Arrays.toString(strings));
+        String[] ss = new String[5];
+        for (int i = 0; i < 5; i++) {
+            ss[i] = "data" + (i + 5);
+        }
+        System.out.println(Arrays.toString(ss));
+        String[] result = new String[strings.length + ss.length];
+        System.arraycopy(strings, 0, result, 0, strings.length);
+        System.out.println(Arrays.toString(result));
+        System.arraycopy(ss, 0, result, strings.length, ss.length);
+        System.out.println(Arrays.toString(result));
+    }
+
+    @Test
+    public void testDate() throws Exception {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        String startFormat = format.format(new Date());
+        System.out.println(testDate("mm:ss", startFormat, "10:00", "45:00"));
+        System.out.println(testDate("mm:ss", startFormat, "20:00", "40:00"));
+        System.out.println(testDate("mm:ss", startFormat, "16:59", "16:00"));
+    }
+
+
+    public boolean testDate(String formatStr, String compare, String start, String end) throws Exception {
+        SimpleDateFormat format = new SimpleDateFormat(formatStr);
+        Date compareDate = format.parse(compare);
+        Date startDate = format.parse(start);
+        Date endDate = format.parse(end);
+        return isBelong(compareDate, startDate, endDate);
+    }
+
+    public boolean isBelong(Date compare, Date start, Date end) {
+        return compare.after(start) && compare.before(end);
+    }
+
+    @Test
+    public void testException() {
+        testException(0, new Listener() {
+            @Override
+            public void onResponse(int code) {
+                try {
+                    System.out.println(5 / code);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("exe");
+                }
+            }
+        });
+    }
+
+    public void testException(int code, Listener listener) {
+        try {
+            listener.onResponse(code);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("exception test");
+        }
+
+    }
+
+    interface Listener {
+        void onResponse(int code);
     }
 
 

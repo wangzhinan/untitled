@@ -3,7 +3,6 @@ package com.sunland.test.sort;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.BitSet;
 
 public class ArraySort {
 
@@ -30,6 +29,7 @@ public class ArraySort {
             if (flag) break;
         }
     }
+    //
 
     public void selectSort(int[] array) {
         for (int i = 0; i < array.length; i++) {
@@ -84,7 +84,7 @@ public class ArraySort {
         }
     }
 
-    public int[] createArray(int length) {
+    public static int[] createArray(int length) {
         int[] array = new int[length];
         for (int i = 0; i < array.length; i++) {
             array[i] = (int) (Math.random() * 100);

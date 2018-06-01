@@ -1,6 +1,7 @@
 package com.sunland.test;
 
 import com.sunland.po.User;
+import com.sunland.test.sort.ArraySort;
 import org.junit.Test;
 
 import java.io.*;
@@ -192,7 +193,7 @@ public class Test1<E> {
     }
 
     @Test
-    public void testClone2(){
+    public void testClone2() {
         Person person = new Person("admin");
         System.out.println("person = " + person);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -211,6 +212,66 @@ public class Test1<E> {
             e1.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void testEnum() {
+        System.out.println(DataType.valueOf("A").getValue());
+        DataType[] values = DataType.values();
+    }
+
+    @Test
+    public void testgradeTable() {
+        int score = 55;
+        for (int i = 0; i < 11; i++) {
+            System.out.println(score + " = " + gradeTable(score));
+            score += 5;
+        }
 
     }
+
+    public String gradeTable(int score) {
+        double[] rangeLimit = {60, 70, 80, 90, 100};
+        String[] level = {"E", "D", "C", "B", "A"};
+        int levelIndex = 0;
+        String studentGrade = level[level.length - 1];
+        while ((level[level.length - 1].equals(studentGrade)) && levelIndex < level.length - 1) {
+            if (score < rangeLimit[levelIndex]) {
+                studentGrade = level[levelIndex];
+            } else {
+                levelIndex++;
+            }
+        }
+        return studentGrade;
+    }
+
+    @Test
+    public void testIndexOf() {
+        int[] array = ArraySort.createArray(10);
+        System.out.println(Arrays.toString(array));
+        for (int i = 0; i < array.length; i++) {
+            System.out.println("[" + i + "] = " + indexOf(array, array[i]));
+        }
+        System.out.println(indexOf(array, 8));
+
+
+    }
+
+    public int indexOf(int[] array, int foundValue) {
+        int[] temp = new int[array.length + 1];
+        System.arraycopy(array, 0, temp, 1, array.length);
+        temp[0] = foundValue;
+        int index = array.length;
+        while (temp[index] != foundValue) {
+            index--;
+        }
+        return --index;
+    }
+
+    @Test
+    public void test() throws Exception {
+
+       
+    }
+
 }
