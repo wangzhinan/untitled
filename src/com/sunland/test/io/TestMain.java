@@ -39,7 +39,7 @@ public class TestMain {
     }
 
     @Test
-    public void test2(){
+    public void test2() {
         String path = "D:/test/data.txt";
         try {
             DataInputStream dataInputStream = new DataInputStream(new FileInputStream(path));
@@ -56,10 +56,10 @@ public class TestMain {
     }
 
     @Test
-    public void testSplit(){
+    public void testSplit() {
         String fileName = "D:\\test\\ThinkinJava.pdf";
         try {
-            split(fileName,102400);
+            split(fileName, 102400);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,6 +74,7 @@ public class TestMain {
 
         }
     }
+
     public void testFilePath() throws Exception {
         File file = new File("D:/test/test/test.txt");
         System.out.println("file.getAbsolutePath() = " + file.getAbsolutePath());
@@ -114,8 +115,7 @@ public class TestMain {
     }
 
 
-
-    public void split(String path,long size) throws Exception {
+    public void split(String path, long size) throws Exception {
         File file = new File(path);
         FileInputStream fileInputStream = new FileInputStream(file);
         int number = (int) Math.ceil(file.length() / (double) size);
@@ -140,12 +140,12 @@ public class TestMain {
         File file = new File(fileName);
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         for (int i = 0; i < 21; i++) {
-            File file1 = new File("D:\\test\\temp\\number"+i+".temp");
+            File file1 = new File("D:\\test\\temp\\number" + i + ".temp");
             FileInputStream fileInputStream = new FileInputStream(file1);
             byte[] buffer = new byte[1024];
             int length;
-            while ((length = fileInputStream.read(buffer)) != -1){
-                fileOutputStream.write(buffer,0,length);
+            while ((length = fileInputStream.read(buffer)) != -1) {
+                fileOutputStream.write(buffer, 0, length);
             }
             fileInputStream.close();
         }
@@ -155,66 +155,66 @@ public class TestMain {
     @Test
     public void testWriteRandomAccessFile() throws Exception {
         String fileName = "D:/test/random.txt";
-        RandomAccessFile rdf = new RandomAccessFile(fileName,"rw");
-        String name = null ;
-        int age = 0 ;
-        name = "zhangsan" ;         // 字符串长度为8
-        age = 30 ;                  // 数字的长度为4
-        rdf.writeBytes(name) ;      // 将姓名写入文件之中
-        rdf.writeInt(age) ;         // 将年龄写入文件之中
-        name = "lisi    " ;         // 字符串长度为8
-        age = 31 ;                  // 数字的长度为4
-        rdf.writeBytes(name) ;      // 将姓名写入文件之中
-        rdf.writeInt(age) ;         // 将年龄写入文件之中
-        name = "wangwu  " ;         // 字符串长度为8
-        age = 32 ;                  // 数字的长度为4
-        rdf.writeBytes(name) ;      // 将姓名写入文件之中
-        rdf.writeInt(age) ;         // 将年龄写入文件之中
-        rdf.close() ;               // 关闭
+        RandomAccessFile rdf = new RandomAccessFile(fileName, "rw");
+        String name = null;
+        int age = 0;
+        name = "zhangsan";         // 字符串长度为8
+        age = 30;                  // 数字的长度为4
+        rdf.writeBytes(name);      // 将姓名写入文件之中
+        rdf.writeInt(age);         // 将年龄写入文件之中
+        name = "lisi    ";         // 字符串长度为8
+        age = 31;                  // 数字的长度为4
+        rdf.writeBytes(name);      // 将姓名写入文件之中
+        rdf.writeInt(age);         // 将年龄写入文件之中
+        name = "wangwu  ";         // 字符串长度为8
+        age = 32;                  // 数字的长度为4
+        rdf.writeBytes(name);      // 将姓名写入文件之中
+        rdf.writeInt(age);         // 将年龄写入文件之中
+        rdf.close();               // 关闭
     }
 
     @Test
-    public void testReadRandomAccessFile() throws Exception{
-        File f = new File("D:/test/random.txt") ; // 指定要操作的文件
-        RandomAccessFile rdf = null ;       // 声明RandomAccessFile类的对象
-        rdf = new RandomAccessFile(f,"r") ;// 以只读的方式打开文件
-        String name = null ;
-        int age = 0 ;
-        byte b[] = new byte[8] ;    // 开辟byte数组
+    public void testReadRandomAccessFile() throws Exception {
+        File f = new File("D:/test/random.txt"); // 指定要操作的文件
+        RandomAccessFile rdf = null;       // 声明RandomAccessFile类的对象
+        rdf = new RandomAccessFile(f, "r");// 以只读的方式打开文件
+        String name = null;
+        int age = 0;
+        byte b[] = new byte[8];    // 开辟byte数组
         // 读取第二个人的信息，意味着要空出第一个人的信息
-        rdf.skipBytes(12) ;     // 跳过第一个人的信息
-        for(int i=0;i<b.length;i++){
-            b[i] = rdf.readByte() ; // 读取一个字节
+        rdf.skipBytes(12);     // 跳过第一个人的信息
+        for (int i = 0; i < b.length; i++) {
+            b[i] = rdf.readByte(); // 读取一个字节
         }
-        name = new String(b) ;  // 将读取出来的byte数组变为字符串
-        age = rdf.readInt() ;   // 读取数字
-        System.out.println("第二个人的信息 --> 姓名：" + name + "；年龄：" + age) ;
+        name = new String(b);  // 将读取出来的byte数组变为字符串
+        age = rdf.readInt();   // 读取数字
+        System.out.println("第二个人的信息 --> 姓名：" + name + "；年龄：" + age);
         // 读取第一个人的信息
-        rdf.seek(0) ;   // 指针回到文件的开头
-        for(int i=0;i<b.length;i++){
-            b[i] = rdf.readByte() ; // 读取一个字节
+        rdf.seek(0);   // 指针回到文件的开头
+        for (int i = 0; i < b.length; i++) {
+            b[i] = rdf.readByte(); // 读取一个字节
         }
-        name = new String(b) ;  // 将读取出来的byte数组变为字符串
-        age = rdf.readInt() ;   // 读取数字
-        System.out.println("第一个人的信息 --> 姓名：" + name + "；年龄：" + age) ;
-        rdf.skipBytes(12) ; // 空出第二个人的信息
-        for(int i=0;i<b.length;i++){
-            b[i] = rdf.readByte() ; // 读取一个字节
+        name = new String(b);  // 将读取出来的byte数组变为字符串
+        age = rdf.readInt();   // 读取数字
+        System.out.println("第一个人的信息 --> 姓名：" + name + "；年龄：" + age);
+        rdf.skipBytes(12); // 空出第二个人的信息
+        for (int i = 0; i < b.length; i++) {
+            b[i] = rdf.readByte(); // 读取一个字节
         }
-        name = new String(b) ;  // 将读取出来的byte数组变为字符串
-        age = rdf.readInt() ;   // 读取数字
-        System.out.println("第三个人的信息 --> 姓名：" + name + "；年龄：" + age) ;
-        rdf.close() ;               // 关闭
+        name = new String(b);  // 将读取出来的byte数组变为字符串
+        age = rdf.readInt();   // 读取数字
+        System.out.println("第三个人的信息 --> 姓名：" + name + "；年龄：" + age);
+        rdf.close();               // 关闭
     }
 
     @Test
-    public void testFile() throws Exception{
+    public void testFile() throws Exception {
         File file = new File("E:/logs/test2.txt");
         file.renameTo(new File("D:/test/test2.txt"));
     }
 
     @Test
-    public void testStreamTokenizer(){
+    public void testStreamTokenizer() {
         String text = "Hello. This is a text that will be split "
                 + "into tokens. 1+1=2";
         try {
@@ -276,10 +276,10 @@ public class TestMain {
 
 
     @Test
-    public void testStringTokenizer(){
+    public void testStringTokenizer() {
         String str = "hello,java,delphi,asp,php";
-        StringTokenizer st=new StringTokenizer(str,",");
-        while(st.hasMoreTokens()) {
+        StringTokenizer st = new StringTokenizer(str, ",");
+        while (st.hasMoreTokens()) {
             System.out.println(st.nextToken());
         }
 
@@ -338,55 +338,35 @@ public class TestMain {
 
     }
 
+    @Test
+    public void testDeleteFile() {
+        String path = "D:/test/test";
+        System.out.println(deleteFile(path));
+    }
 
-//    public static void decompress(String srcPath, String dest) throws Exception {
-//
-//        File file = new File(srcPath);
-//        if (!file.exists()) {
-//            throw new RuntimeException(srcPath + "所指文件不存在");
-//        }
-//        ZipFile zf = new ZipFile(file);
-//
-//        Enumeration entries = zf.getEntries();
-//
-//        ZipEntry entry = null;
-//
-//        while (entries.hasMoreElements()) {
-//            entry = (ZipEntry) entries.nextElement();
-//
-//            System.out.println("解压" + entry.getName());
-//
-//            if (entry.isDirectory()) {
-//
-//                String dirPath = dest + File.separator + entry.getName();
-//
-//                File dir = new File(dirPath);
-//
-//                dir.mkdirs();
-//
-//            } else {
-//                // 表示文件
-//                File f = new File(dest + File.separator + entry.getName());
-//                if (!f.exists()) {
-//                    String dirs = FileUtils.getParentPath(f);
-//                    File parentDir = new File(dirs);
-//                    parentDir.mkdirs();
-//                }
-//                f.createNewFile();
-//                // 将压缩文件内容写入到这个文件中
-//                InputStream is = zf.getInputStream(entry);
-//                FileOutputStream fos = new FileOutputStream(f);
-//                int count;
-//                byte[] buf = new byte[8192];
-//                while ((count = is.read(buf)) != -1) {
-//                    fos.write(buf, 0, count);
-//                }
-//                is.close();
-//
-//                fos.close();
-//            }
-//        }
-//    }
+    public boolean deleteFile(String fileName) {
+        if (fileName == null || fileName.length() == 0)
+            return true;
+        File file = new File(fileName);
+        return deleteFile(file);
+    }
 
-
+    public boolean deleteFile(File file) {
+        if (file == null || !file.exists())
+            return true;
+        if (file.isFile())
+            return file.delete();
+        File[] files = file.listFiles();
+        if (files == null || files.length == 0)
+            return file.delete();
+        for (File item : files) {
+            if (item.isFile()) {
+                if (!item.delete())
+                    return false;
+            } else {
+                deleteFile(item.getAbsolutePath());
+            }
+        }
+        return file.delete();
+    }
 }

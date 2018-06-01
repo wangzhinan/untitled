@@ -2,6 +2,7 @@ package com.sunland.test;
 
 import com.sunland.dao.UserDao;
 import com.sunland.po.User;
+import javafx.scene.shape.Circle;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,30 +11,46 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.awt.*;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
+import java.util.concurrent.*;
 
 
 public class TestMain {
     private static int a = 0;
     static boolean b = false;
-    private static Person person = new Person("my");
+//    private static Person person = new Person("my");
+
+    class InnerClass {
+
+    }
 
     /**
      * 测试
      *
      * @param args
      */
-    public static void main(String[] args) throws IOException {
-        Person person = new Person("admin");
-        System.out.println(person);
+    public static void main(String[] args) throws Exception {
+//        Person person = new Person("admin");
+//        System.out.println(person);
+//        testTimer();
+        LinkedList<Integer> list = new LinkedList<>();
+        for (int i = 0; i < 40000; i++) {
+            list.add(i);
+        }
+        list.removeIf(integer -> (integer & 1) == 0);
+        list.removeIf(integer -> integer > 0);
+        for (Integer s : list) {
+            System.out.println(s);
+        }
+        TestMain testMain = null;
+        Objects.requireNonNull(testMain);
     }
 
 
@@ -591,6 +608,68 @@ public class TestMain {
         void onResponse(int code);
     }
 
+    public void testA() {
+        String s = "";
+        System.out.println(s.length());
+        int a = 5;
+        testArray(a);
+    }
 
+
+    public void testArray(Integer a) {
+        Shape[] shapes = (Shape[]) new Circle[54];
+        Object[] circles = new Shape[4];
+        List<String> list = new ArrayList<>();
+        list.add("ss");
+
+    }
+
+    public <T> boolean contains(T[] array, T t) {
+        for (T r : array) {
+            if (r.equals(t))
+                return true;
+        }
+        return false;
+    }
+
+
+    public static void testTimer() throws Exception {
+
+        FutureTask<String> futureTask = new FutureTask<>(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return Thread.currentThread().getName();
+            }
+        });
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss   ");
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    new Thread(futureTask).start();
+                    System.out.println(dateFormat.format(new Date()) + Thread.currentThread().getName() + "-----" + futureTask.get());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("exception");
+                }
+            }
+        };
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Timer timer = new Timer();
+                timer.schedule(task, 0, 5000);
+            }
+        }).start();
+
+
+    }
 }
 

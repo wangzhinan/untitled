@@ -2,12 +2,11 @@ package com.sunland.test.collection;
 
 import org.junit.Test;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TestMain {
-    private static int  n;
+    private static int n;
+
     public static void main(String[] args) {
     }
 
@@ -84,7 +83,23 @@ public class TestMain {
         }
     }
 
-    private static final ThreadLocal<DateFormat> df =
-            ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd"));
+    @Test
+    public void testSearch() {
+        int[] number = {1, 2, 3, 5, 7, 9, 11, 20};
+        System.out.println(search(number, 32));
+        System.out.println(search(number, 3));
+        System.out.println(search(number, 11));
+    }
+
+    public int search(int[] number, int dest) {
+        int[] tmp = new int[number.length + 1];
+        System.arraycopy(number, 0, tmp, 1, number.length);
+        tmp[0] = dest;
+        int j = number.length;
+        while (tmp[j] != dest) {
+            j--;
+        }
+        return j - 1;
+    }
 
 }
